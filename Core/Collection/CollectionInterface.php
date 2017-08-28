@@ -7,7 +7,7 @@ use ArrayAccess;
 interface CollectionInterface extends Iterator, ArrayAccess
 {
     public function add(string $name, $value);
-    public function get(string $name);
+    public function get(string $name, $default);
     public function count() : int;
     public function remove(string $name);
 }

@@ -25,13 +25,13 @@ class Collection implements CollectionInterface
         $this->data[$name] = $value;
     }
 
-    public function get(string $name)
+    public function get(string $name, $default = null)
     {
         if ($this->has($name)) {
             return $this->data[$name];
         }
 
-        return null;
+        return $default;
     }
 
     public function has(string $name): bool
@@ -154,7 +154,7 @@ class Collection implements CollectionInterface
      */
     public function offsetSet($offset, $value)
     {
-        $this->set($offset, $value);
+        $this->add($offset, $value);
     }
 
     /**
