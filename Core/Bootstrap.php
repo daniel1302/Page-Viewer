@@ -1,10 +1,10 @@
 <?php
 namespace PageViewer\Core;
 
-class Bootstrap
+final class Bootstrap
 {
     public function init() : void
     {
-
+        echo 'INIT';
     }
 }
