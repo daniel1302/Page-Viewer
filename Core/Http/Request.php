@@ -5,7 +5,7 @@ namespace PageViewer\Core\Http;
 use PageViewer\Core\Collection\CollectionInterface;
 use PageViewer\Core\Collection\ReadOnlyCollection;
 
-final class Request
+final class Request implements RequestInterface
 {
     /**
      * @var CollectionInterface
