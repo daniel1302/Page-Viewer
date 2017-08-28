@@ -1,9 +1,12 @@
 <?php
-namespace PageViewer\Core;
+namespace PageViewer\Core\Bootstrap;
 
 
+use PageViewer\Core\Bootstrap\Exception\BootstrapException;
+use PageViewer\Core\Config\Config;
 use PageViewer\Core\Controller\Exception\ControllerException;
 use PageViewer\Core\Controller\ControllerInterface;
+use PageViewer\Core\Db\Db;
 use PageViewer\Core\Http\Request;
 use PageViewer\Core\Http\RequestInterface;
 use PageViewer\Core\Http\ResponseInterface;
@@ -31,12 +34,31 @@ final class Bootstrap
      */
     private $router;
 
+    /**
+     * @var Config
+     */
+    private $config;
+
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
+
     public function init() : void
     {
         $this->request = Request::initFromGlobals();
     }
 
-    public function fire()
+    public function initDb(string $dbAdapter): void
+    {
+        if (!$this->config->has('db_host')) {
+            throw BootstrapException::forUndefinedDbParams();
+        }
+
+        Db::setAdapter(new $dbAdapter($this->config->get('db_host'), $this->config->get('db_user'), $this->config->get('db_pass'), $this->config->get('db_name')));
+    }
+
+    public function fire(): void
     {
         $route = $this->router->matchRoute();
         $controllerReflection = new ReflectionClass($route->getControllerName());
@@ -46,7 +68,7 @@ final class Bootstrap
         $this->fireMethod($route, $controllerReflection, $controller);
     }
 
-    private function fireMethod(Route $route, ReflectionClass $class, ControllerInterface $controller)
+    private function fireMethod(Route $route, ReflectionClass $class, ControllerInterface $controller): void
     {
         if (!$class->hasMethod($route->getMethod())) {
             throw ControllerException::forNotDeclaredMethod($route->getControllerName(), $route->getMethod());
@@ -66,12 +88,17 @@ final class Bootstrap
         return $this->request;
     }
 
-    public function registerRoutes(RouteRegistryInterface $register)
+    public function registerRoutes(RouteRegistryInterface $register) : void
     {
         $this->router = $register->register();
     }
 
-    private function injectParametersToController(ControllerInterface $controller)
+    public function setConfig(Config $config)
+    {
+        $this->config = $config;
+    }
+
+    private function injectParametersToController(ControllerInterface $controller) : void
     {
         $controller->setRequest($this->request);
     }
