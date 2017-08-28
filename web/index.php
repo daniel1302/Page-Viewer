@@ -10,13 +10,8 @@ spl_autoload_register('\Autoloader::register');
 $bootstrap = new \PageViewer\Core\Bootstrap();
 $bootstrap->init();
 
-//$bootstrap->registerRouter();
+$routerRegistry = new \PageViewer\Resources\RouteRegistry($bootstrap->getRequest());
 
+$bootstrap->registerRoutes($routerRegistry);
 
-$a = ['a' => 'A', 'b' => 'B'];
-$collection = new \PageViewer\Core\Collection\Collection($a);
-
-foreach ($collection as $k => $v)
-{
-    var_dump($k, $v);
-}
+$bootstrap->fire();
