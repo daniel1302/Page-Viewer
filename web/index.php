@@ -11,3 +11,12 @@ $bootstrap = new \PageViewer\Core\Bootstrap();
 $bootstrap->init();
 
 //$bootstrap->registerRouter();
+
+
+$a = ['a' => 'A', 'b' => 'B'];
+$collection = new \PageViewer\Core\Collection\Collection($a);
+
+foreach ($collection as $k => $v)
+{
+    var_dump($k, $v);
+}
