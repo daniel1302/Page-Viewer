@@ -8,6 +8,7 @@ use Throwable;
 class RouterException extends Exception
 {
     const CODE_DUPLICATE = 40;
+    const CODE_MISS_MATCH = 41;
 
     public static function forDuplicate(string $routeName, Throwable $prev = null) : RouterException
     {
@@ -17,4 +18,14 @@ class RouterException extends Exception
             $prev
         );
     }
+
+    public static function forMissMatch(Throwable $prev = null) : RouterException
+    {
+        return new self(
+            'No page found',
+            self::CODE_DUPLICATE,
+            $prev
+        );
+    }
+
 }

@@ -4,7 +4,6 @@ namespace PageViewer\Core\Router;
 
 use PageViewer\Core\Collection\Collection;
 use PageViewer\Core\Collection\CollectionInterface;
-use PageViewer\Core\Controller\ControllerInterface;
 use PageViewer\Core\Http\RequestInterface;
 use PageViewer\Core\Router\Exception\RouterException;
 
@@ -35,14 +34,16 @@ class StandardRouter implements RouterInterface
         $this->routes[$route->getName()] = $route;
     }
 
-    public function matchRoute(): ControllerInterface
+    public function matchRoute(): Route
     {
         $query = $this->request->getQuery();
 
         $routeName = $query->get('page', RouterInterface::INDEX_ROUTE);
-        var_dump($routeName);
-        die();
+
+        if (!isset($this->routes[$routeName])) {
+            throw RouterException::forMissMatch();
+        }
+
+        return $this->routes[$routeName];
     }
-
-
 }

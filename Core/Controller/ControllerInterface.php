@@ -2,7 +2,9 @@
 namespace PageViewer\Core\Controller;
 
 
-class ControllerInterface
-{
+use PageViewer\Core\Http\RequestInterface;
 
+interface ControllerInterface
+{
+    public function setRequest(RequestInterface $request);
 }

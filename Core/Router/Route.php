@@ -17,7 +17,7 @@ final class Route
     /**
      * @var string
      */
-    private $controller;
+    private $controllerName;
 
     /**
      * @var string
@@ -31,10 +31,10 @@ final class Route
      */
     private $params;
 
-    public function __construct(string $name, string $controller, string $method, array $params = [])
+    public function __construct(string $name, string $controllerName, string $method, array $params = [])
     {
         $this->name = $name;
-        $this->controller = $controller;
+        $this->controllerName = $controllerName;
         $this->method = $method;
     }
 
@@ -49,9 +49,9 @@ final class Route
     /**
      * @return string
      */
-    public function getController(): string
+    public function getControllerName(): string
     {
-        return $this->controller;
+        return $this->controllerName;
     }
 
     /**
