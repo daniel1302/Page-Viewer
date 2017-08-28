@@ -1,19 +1,19 @@
 <?php
 namespace PageViewer\Core\Collection;
 
-
+use ArrayObject;
 use PageViewer\Core\Collection\Exception\CollectionException;
 
 class Collection implements CollectionInterface
 {
     /**
-     * @var array
+     * @var ArrayObject
      */
     protected $data;
 
     public function __construct(array $values = [])
     {
-        $this->data = $values;
+        $this->data = new ArrayObject($values);
     }
 
     public function add(string $name, $value)
@@ -27,7 +27,7 @@ class Collection implements CollectionInterface
 
     public function get(string $name)
     {
-        if (isset($this->data[$name])) {
+        if ($this->has($name)) {
             return $this->data[$name];
         }
 
@@ -36,12 +36,12 @@ class Collection implements CollectionInterface
 
     public function has(string $name): bool
     {
-        return isset($this->data[$name]);
+        return $this->data->offsetExists($name);
     }
 
     public function count(): int
     {
-        return count($this->data);
+        return $this->data->count();
     }
 
     public function remove(string $name)
@@ -49,6 +49,8 @@ class Collection implements CollectionInterface
         if (!$this->has($name)) {
             throw CollectionException::forNonExistingItem($name);
         }
+
+        $this->data->offsetUnset($name);
     }
 
     /**
