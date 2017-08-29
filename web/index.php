@@ -14,7 +14,11 @@ $config->parse(\PageViewer\Core\Config\Adapter\AdapterFactory::createForIniFile(
 $viewDir = __DIR__ . '/../src/view';
 $viewAdapter = new PageViewer\Core\ViewAdapter\StandardViewAdapter($viewDir, $viewDir.'/template.phtml');
 
+$eventRegistry = new \PageViewer\Resources\EventRegistry();
+
 $bootstrap = new \PageViewer\Core\Bootstrap\Bootstrap($config);
+$eventRegistry->register($bootstrap->getEvent());
+
 $bootstrap->init();
 $bootstrap->initDb(\PageViewer\Core\Db\Adapter\MysqlAdapter::class);
 $bootstrap->initView($viewAdapter);

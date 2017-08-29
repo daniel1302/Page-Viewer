@@ -8,11 +8,7 @@ class IndexController extends AbstractController
 {
     public function indexAction()
     {
-        return $this->render('Page/index', []);
+        return $this->render('Index/index', []);
     }
 
-    public function contactAction()
-    {
-        return new Response('BBBB');
-    }
 }

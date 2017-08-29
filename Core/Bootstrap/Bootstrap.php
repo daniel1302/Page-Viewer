@@ -10,6 +10,8 @@ use PageViewer\Core\Controller\AbstractController;
 use PageViewer\Core\Controller\Exception\ControllerException;
 use PageViewer\Core\Controller\ControllerInterface;
 use PageViewer\Core\Db\Db;
+use PageViewer\Core\Event\Event;
+use PageViewer\Core\Event\EventRegistryInterface;
 use PageViewer\Core\Http\Request;
 use PageViewer\Core\Http\RequestInterface;
 use PageViewer\Core\Http\ResponseInterface;
@@ -53,16 +55,26 @@ final class Bootstrap
      */
     private $container;
 
+    /**
+     * @var Event
+     */
+    private $event;
+
     public function __construct(Config $config)
     {
         $this->config = $config;
         $config->addParameter('root_dir', __DIR__ . '/../..');
+        $this->event = new Event();
+
     }
 
     public function init() : void
     {
+        $this->event->dispatch(EventRegistryInterface::BEFORE_INIT);
+
         $this->request = Request::initFromGlobals();
         $this->initContainer();
+        $this->event->setContainer($this->container);
     }
 
     public function initDb(string $dbAdapter): void
@@ -111,11 +123,19 @@ final class Bootstrap
         }
 
         $response->send();
+
+
+        $this->event->dispatch(EventRegistryInterface::AFTER_RENDER);
     }
 
     public function getRequest(): RequestInterface
     {
         return $this->request;
+    }
+
+    public function getEvent() : Event
+    {
+        return $this->event;
     }
 
     public function registerRoutes(RouteRegistryInterface $register) : void
