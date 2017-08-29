@@ -9,8 +9,10 @@ use PageViewer\Model\Page\Finder\DirectoryFinder;
 use PageViewer\Model\Page\Finder\Finder;
 use PageViewer\Model\Page\Parser\EmailParser;
 use PageViewer\Model\Page\Parser\FirstHeaderParser;
+use PageViewer\Model\Page\Parser\HeadersParser;
 use PageViewer\Model\Page\Parser\ParagraphParser;
 use PageViewer\Model\Page\Parser\Parser;
+use PageViewer\Model\Page\Parser\SmallerHeadersParser;
 use PageViewer\Model\Page\Parser\UrlParser;
 use PageViewer\Repository\LinkRepository;
 use PageViewer\Repository\PageRepository;
@@ -52,7 +54,7 @@ class ServiceRegistry implements ServiceRegistryInterface
             $parser->addParser(new EmailParser());
             $parser->addParser(new UrlParser());
             $parser->addParser(new ParagraphParser());
-            $parser->addParser(new FirstHeaderParser());
+            $parser->addParser(new HeadersParser());
 //            $parser->addLineByLineParser(new FirstHeaderParser());
 
             return $parser;
