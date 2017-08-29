@@ -2,6 +2,7 @@
 namespace PageViewer\Resources;
 
 use PageViewer\Controller\IndexController;
+use PageViewer\Controller\PageController;
 use PageViewer\Core\Http\RequestInterface;
 use PageViewer\Core\Router\Route;
 use PageViewer\Core\Router\RouteRegistryInterface;
@@ -28,7 +29,7 @@ class RouteRegistry implements RouteRegistryInterface
 
         $router->registerRoute(new Route(RouterInterface::INDEX_ROUTE, IndexController::class, 'indexAction'));
         $router->registerRoute(new Route('contact', IndexController::class, 'contactAction'));
-        $router->registerRoute(new Route('page', IndexController::class, 'indexAction', ['link' => '[\d\w \-\_]+']));
+        $router->registerRoute(new Route('page', PageController::class, 'indexAction', ['link' => '[\d\w \-\_]+']));
 
         return $router;
     }

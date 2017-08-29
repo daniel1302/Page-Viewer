@@ -44,6 +44,9 @@ class StandardRouter implements RouterInterface
             throw RouterException::forMissMatch();
         }
 
-        return $this->routes[$routeName];
+        $route = $this->routes[$routeName];
+        //TODO: Valid params
+
+        return $route;
     }
 }

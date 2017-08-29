@@ -10,10 +10,15 @@ spl_autoload_register('\Autoloader::register');
 $config = new \PageViewer\Core\Config\Config();
 $config->parse(\PageViewer\Core\Config\Adapter\AdapterFactory::createForIniFile(__DIR__ .'/../src/Resources/config.ini.php'));
 
+$viewAdapter = new PageViewer\Core\ViewAdapter\StandardViewAdapter(__DIR__ . '/../src/view');
+
 $bootstrap = new \PageViewer\Core\Bootstrap\Bootstrap($config);
 $bootstrap->init();
 $bootstrap->initDb(\PageViewer\Core\Db\Adapter\MysqlAdapter::class);
+$bootstrap->initView($viewAdapter);
 $routerRegistry = new \PageViewer\Resources\RouteRegistry($bootstrap->getRequest());
+
+
 
 $bootstrap->registerRoutes($routerRegistry);
 

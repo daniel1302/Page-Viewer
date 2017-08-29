@@ -3,6 +3,7 @@ namespace PageViewer\Core\Controller\Exception;
 
 use Exception;
 use PageViewer\Core\Http\RequestInterface;
+use PageViewer\Core\Http\ResponseInterface;
 use Throwable;
 
 class ControllerException extends Exception
@@ -25,7 +26,7 @@ class ControllerException extends Exception
             sprintf('Method "%s" for controller "%s" returned invalid type. Expected %s, %s given',
                 $methodName,
                 $controllerName,
-                RequestInterface::class,
+                ResponseInterface::class,
                 is_object($given) ? get_class($given) : gettype($given)
             ),
             self::CODE_INVALID_RESPONSE,

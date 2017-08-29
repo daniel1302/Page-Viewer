@@ -4,6 +4,7 @@ namespace PageViewer\Core\Bootstrap;
 
 use PageViewer\Core\Bootstrap\Exception\BootstrapException;
 use PageViewer\Core\Config\Config;
+use PageViewer\Core\Controller\AbstractController;
 use PageViewer\Core\Controller\Exception\ControllerException;
 use PageViewer\Core\Controller\ControllerInterface;
 use PageViewer\Core\Db\Db;
@@ -13,6 +14,7 @@ use PageViewer\Core\Http\ResponseInterface;
 use PageViewer\Core\Router\Route;
 use PageViewer\Core\Router\RouteRegistryInterface;
 use PageViewer\Core\Router\RouterInterface;
+use PageViewer\Core\ViewAdapter\ViewAdapterInterface;
 use ReflectionClass;
 
 
@@ -39,6 +41,11 @@ final class Bootstrap
      */
     private $config;
 
+    /**
+     * @var ViewAdapterInterface
+     */
+    private $viewAdapter;
+
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -58,11 +65,25 @@ final class Bootstrap
         Db::setAdapter(new $dbAdapter($this->config->get('db_host'), $this->config->get('db_user'), $this->config->get('db_pass'), $this->config->get('db_name')));
     }
 
+    public function initView(ViewAdapterInterface $view) : void
+    {
+        $this->viewAdapter = $view;
+    }
+
     public function fire(): void
     {
         $route = $this->router->matchRoute();
         $controllerReflection = new ReflectionClass($route->getControllerName());
+        /** @var AbstractController $controller */
         $controller = $controllerReflection->newInstance();
+
+        if (!($controller instanceof ControllerInterface)) {
+            throw BootstrapException::forInvalidControllerClass();
+        }
+
+        $controller->setViewAdapter($this->viewAdapter);
+        $controller->setRequest($this->request);
+
 
         $this->injectParametersToController($controller);
         $this->fireMethod($route, $controllerReflection, $controller);
