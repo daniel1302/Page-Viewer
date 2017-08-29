@@ -39,9 +39,11 @@ class PageController extends AbstractController
         /** @var Parser $parserService */
         $parserService = $this->container->get('page_parser');
 
+        $page = $parserService->parse($page);
 
         return $this->render('Page/view', [
-            'item' => $parserService->parse($page)
+            'item' => $page,
+            'title' => $page->getTitle()
         ]);
     }
 }

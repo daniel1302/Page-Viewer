@@ -17,9 +17,9 @@ class StandardViewAdapter implements ViewAdapterInterface
     private $viewDir;
 
 
-    public function __construct(string $viewDir)
+    public function __construct(string $viewDir, string $tpl = null)
     {
-        $this->view = new Renderer();
+        $this->view = new Renderer($tpl);
         $this->viewDir = $viewDir;
     }
 
