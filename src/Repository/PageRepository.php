@@ -12,7 +12,7 @@ class PageRepository
 {
     private $cache = [];
 
-    public function getById(int $id) : ?Page
+    public function getById(int $id)
     {
         $this->collectRowsIfCacheIsEmpty();
 
@@ -23,7 +23,7 @@ class PageRepository
         return $this->cache[$id];
     }
 
-    private function collectRowsIfCacheIsEmpty() : void
+    private function collectRowsIfCacheIsEmpty()
     {
         if (!empty($this->cache)) {
             return;

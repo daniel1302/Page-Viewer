@@ -9,5 +9,5 @@ interface EventRegistryInterface
     const BEFORE_INIT = 1;
     const AFTER_RENDER = 2;
 
-    public function register(Event $event): void;
+    public function register(Event $event);
 }

@@ -68,7 +68,7 @@ final class Bootstrap
 
     }
 
-    public function init() : void
+    public function init()
     {
         $this->event->dispatch(EventRegistryInterface::BEFORE_INIT);
 
@@ -77,7 +77,7 @@ final class Bootstrap
         $this->event->setContainer($this->container);
     }
 
-    public function initDb(string $dbAdapter): void
+    public function initDb(string $dbAdapter)
     {
         if (!$this->config->has('db_host')) {
             throw BootstrapException::forUndefinedDbParams();
@@ -86,12 +86,12 @@ final class Bootstrap
         Db::setAdapter(new $dbAdapter($this->config->get('db_host'), $this->config->get('db_user'), $this->config->get('db_pass'), $this->config->get('db_name')));
     }
 
-    public function initView(ViewAdapterInterface $view) : void
+    public function initView(ViewAdapterInterface $view)
     {
         $this->viewAdapter = $view;
     }
 
-    public function fire(): void
+    public function fire()
     {
         $route = $this->router->matchRoute();
         $controllerReflection = new ReflectionClass($route->getControllerName());
@@ -110,7 +110,7 @@ final class Bootstrap
         $this->fireMethod($route, $controllerReflection, $controller);
     }
 
-    private function fireMethod(Route $route, ReflectionClass $class, ControllerInterface $controller): void
+    private function fireMethod(Route $route, ReflectionClass $class, ControllerInterface $controller)
     {
         if (!$class->hasMethod($route->getMethod())) {
             throw ControllerException::forNotDeclaredMethod($route->getControllerName(), $route->getMethod());
@@ -138,12 +138,12 @@ final class Bootstrap
         return $this->event;
     }
 
-    public function registerRoutes(RouteRegistryInterface $register) : void
+    public function registerRoutes(RouteRegistryInterface $register)
     {
         $this->router = $register->register();
     }
 
-    public function registerServices(ServiceRegistryInterface $registry) : void
+    public function registerServices(ServiceRegistryInterface $registry)
     {
         $registry->register($this->container);
     }
@@ -153,7 +153,7 @@ final class Bootstrap
         $this->config = $config;
     }
 
-    private function injectParametersToController(ControllerInterface $controller) : void
+    private function injectParametersToController(ControllerInterface $controller)
     {
         $controller->setRequest($this->request);
     }

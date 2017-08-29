@@ -4,7 +4,7 @@ namespace PageViewer\Core\Validator;
 
 interface ValidatorInterface
 {
-    public function validate() : void;
+    public function validate();
 
     public function isValid(): bool;
 

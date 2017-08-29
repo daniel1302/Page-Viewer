@@ -16,7 +16,7 @@ use PageViewer\Event\ExecutionTimeMeterStartEvent;
 
 class EventRegistry implements EventRegistryInterface
 {
-    public function register(Event $event): void
+    public function register(Event $event)
     {
         $event->register(
             EventRegistryInterface::BEFORE_INIT,

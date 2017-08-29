@@ -25,7 +25,7 @@ class StandardRouter implements RouterInterface
         $this->routes  = new Collection();
     }
 
-    public function registerRoute(Route $route) : void
+    public function registerRoute(Route $route)
     {
         if (isset($this->routes[$route->getName()])) {
             throw RouterException::forDuplicate($route->getName());

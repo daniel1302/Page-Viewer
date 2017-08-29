@@ -6,7 +6,7 @@ class Autoloader
         'PageViewer'.'\\' => 'src/'
     ];
 
-    public static function register(string $name) : void
+    public static function register(string $name)
     {
         $path = self::resolvePath($name);
 

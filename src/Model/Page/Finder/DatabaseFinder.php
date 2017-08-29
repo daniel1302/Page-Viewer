@@ -48,7 +48,7 @@ class DatabaseFinder implements PageFinderInterface
         return false;
     }
 
-    public function load(string $name) : ?Page
+    public function load(string $name)
     {
         $this->getList();
 

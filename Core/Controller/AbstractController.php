@@ -30,12 +30,12 @@ abstract class AbstractController implements ControllerInterface
         $this->request = $request;
     }
 
-    public function setViewAdapter(ViewAdapterInterface $view) : void
+    public function setViewAdapter(ViewAdapterInterface $view)
     {
         $this->view = $view;
     }
 
-    public function setContainer(Container $container) : void
+    public function setContainer(Container $container)
     {
         $this->container = $container;
     }

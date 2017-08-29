@@ -6,7 +6,7 @@ interface RouterInterface
 {
     const INDEX_ROUTE = 'index';
 
-    public function registerRoute(Route $route) : void;
+    public function registerRoute(Route $route);
 
     public function matchRoute() : Route;
 }

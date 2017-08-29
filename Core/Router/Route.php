@@ -73,7 +73,7 @@ final class Route
 
 
 
-    private function setParams(array $params = []) : void
+    private function setParams(array $params = [])
     {
         foreach ($params as $paramName => $paramRegex) {
             if (is_int($paramName)) {

@@ -8,5 +8,5 @@ interface PageFinderInterface
 {
     public function getList(): array;
     public function doesExist(string $name) : bool;
-    public function load(string $name) : ?Page;
+    public function load(string $name);
 }

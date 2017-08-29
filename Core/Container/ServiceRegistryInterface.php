@@ -11,5 +11,5 @@ namespace PageViewer\Core\Container;
 
 interface ServiceRegistryInterface
 {
-    public function register(Container $container) : void;
+    public function register(Container $container);
 }

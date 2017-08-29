@@ -20,7 +20,7 @@ use PageViewer\Repository\PageRepository;
 
 class ServiceRegistry implements ServiceRegistryInterface
 {
-    public function register(Container $container): void
+    public function register(Container $container)
     {
         Container::addDefinition('repository_page', function (Container $container) {
             return new PageRepository();

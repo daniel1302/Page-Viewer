@@ -13,7 +13,7 @@ class RegexValidator extends AbstractValidator
         PREG_BAD_UTF8_OFFSET_ERROR  => 'Code 5 : Malformed UTF-8 data',
     ];
 
-    public function validate(): void
+    public function validate()
     {
         preg_match(sprintf('/%s/', $this->validatedValue), 'bla bla bla');
 

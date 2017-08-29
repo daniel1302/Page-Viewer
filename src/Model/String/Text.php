@@ -21,7 +21,7 @@ class Text extends ArrayObject
         return mb_convert_encoding($this->getTextCopy(), 'HTML-ENTITIES', 'UTF-8');
     }
 
-    public function getLine(int $i) : ?string
+    public function getLine(int $i)
     {
         if (!isset($this->lines[$i])) {
             return null;

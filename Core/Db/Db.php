@@ -13,7 +13,7 @@ final class Db
     private static $adapters = [];
 
 
-    public static function setAdapter(DatabaseAdapter $adapter, string $type = self::DEFAULT) : void
+    public static function setAdapter(DatabaseAdapter $adapter, string $type = self::DEFAULT)
     {
         self::$adapters[$type] = $adapter;
     }
