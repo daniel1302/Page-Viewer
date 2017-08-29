@@ -29,6 +29,11 @@ final class Config
         return $this->params[$name];
     }
 
+    public function addParameter(string $name, string $value)
+    {
+        $this->params[$name] = $value;
+    }
+
     public function parse(ConfigAdapterInterface $adapter)
     {
         foreach ($adapter->parse() as $key => $value) {

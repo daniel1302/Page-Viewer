@@ -56,12 +56,13 @@ final class Bootstrap
     public function __construct(Config $config)
     {
         $this->config = $config;
+        $config->addParameter('root_dir', __DIR__ . '/../..');
     }
 
     public function init() : void
     {
         $this->request = Request::initFromGlobals();
-        $this->container = new Container();
+        $this->initContainer();
     }
 
     public function initDb(string $dbAdapter): void
@@ -135,5 +136,13 @@ final class Bootstrap
     private function injectParametersToController(ControllerInterface $controller) : void
     {
         $controller->setRequest($this->request);
+    }
+
+    private function initContainer()
+    {
+        $this->container = new Container();
+        Container::addDefinition('config', function (Container $container) {
+            return $this->config;
+        });
     }
 }
