@@ -9,7 +9,7 @@
 namespace PageViewer\Model\Page\Parser;
 
 
-class ParagraphParser extends AbstractParser
+class ParagraphParser extends AbstractLineByLineParser
 {
 
 }

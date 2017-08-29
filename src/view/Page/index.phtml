@@ -1,0 +1,10 @@
+<ul>
+    <?php /** @var \PageViewer\Entity\Link $item */ ?>
+    <?php foreach ($list as $item) : ?>
+        <li>
+            <a href="?page=view-page&name=<?=$item->getLink(); ?>">
+                <?=$item->getPage()->getTitle(); ?>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>

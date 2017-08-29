@@ -2,7 +2,7 @@
 namespace PageViewer\Model\Page\Parser;
 
 
-interface ParserInterface
+interface LineByLineParserInterface
 {
     public function parseLine(string $text) : string;
 }

@@ -1,5 +1,5 @@
 <?php
-namespace PageViewer\Model\Finder;
+namespace PageViewer\Model\Page\Finder;
 
 
 interface PageFinderInterface
