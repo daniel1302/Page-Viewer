@@ -4,6 +4,8 @@ namespace PageViewer\Core\Bootstrap;
 
 use PageViewer\Core\Bootstrap\Exception\BootstrapException;
 use PageViewer\Core\Config\Config;
+use PageViewer\Core\Container\Container;
+use PageViewer\Core\Container\ServiceRegistryInterface;
 use PageViewer\Core\Controller\AbstractController;
 use PageViewer\Core\Controller\Exception\ControllerException;
 use PageViewer\Core\Controller\ControllerInterface;
@@ -46,6 +48,11 @@ final class Bootstrap
      */
     private $viewAdapter;
 
+    /**
+     * @var Container
+     */
+    private $container;
+
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -54,6 +61,7 @@ final class Bootstrap
     public function init() : void
     {
         $this->request = Request::initFromGlobals();
+        $this->container = new Container();
     }
 
     public function initDb(string $dbAdapter): void
@@ -83,7 +91,7 @@ final class Bootstrap
 
         $controller->setViewAdapter($this->viewAdapter);
         $controller->setRequest($this->request);
-
+        $controller->setContainer($this->container);
 
         $this->injectParametersToController($controller);
         $this->fireMethod($route, $controllerReflection, $controller);
@@ -112,6 +120,11 @@ final class Bootstrap
     public function registerRoutes(RouteRegistryInterface $register) : void
     {
         $this->router = $register->register();
+    }
+
+    public function registerServices(ServiceRegistryInterface $registry) : void
+    {
+        $registry->register($this->container);
     }
 
     public function setConfig(Config $config)

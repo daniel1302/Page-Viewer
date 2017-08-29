@@ -16,6 +16,7 @@ $bootstrap = new \PageViewer\Core\Bootstrap\Bootstrap($config);
 $bootstrap->init();
 $bootstrap->initDb(\PageViewer\Core\Db\Adapter\MysqlAdapter::class);
 $bootstrap->initView($viewAdapter);
+$bootstrap->registerServices(new \PageViewer\Resources\ServiceRegistry());
 $routerRegistry = new \PageViewer\Resources\RouteRegistry($bootstrap->getRequest());
 
 
