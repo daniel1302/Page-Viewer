@@ -9,6 +9,8 @@
 namespace PageViewer\Model\Page\InformationRetriever;
 
 
+use PageViewer\Model\String\Regex;
+
 class TitleRetrieverText implements InformationRetrieverInterface, TitleRetriever
 {
     const KEY_TITLE = 'title';
@@ -19,7 +21,8 @@ class TitleRetrieverText implements InformationRetrieverInterface, TitleRetrieve
 
     public function parseContent(string $content): string
     {
-        preg_match(self::TITLE_REGEX, $content, $matches);
+        $regex = new Regex(self::TITLE_REGEX);
+        $matches = $regex->match($content);
 
         if (!isset($matches[self::KEY_TITLE])) {
             return TitleRetriever::UNDEFINED_TITLE;

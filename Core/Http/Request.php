@@ -38,7 +38,7 @@ final class Request implements RequestInterface
         return $this->request;
     }
 
-    public function get(string $name, $default)
+    public function get(string $name, $default = null)
     {
         return $this->getRequest()->get($name, $this->getQuery()->get($name, $default));
     }

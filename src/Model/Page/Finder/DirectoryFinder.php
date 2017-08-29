@@ -17,13 +17,25 @@ class DirectoryFinder implements PageFinderInterface
      */
     private $dir;
 
+    /**
+     * @var array
+     */
+    private $list = [];
+
     function __construct($dir)
     {
         $this->dir = new DirectoryIterator($dir);
     }
 
+    /**
+     * @return Link[]
+     */
     public function getList(): array
     {
+        if (!empty($this->list)) {
+            return $this->list;
+        }
+
         $result = [];
 
         foreach ($this->dir as $fileInfo) {
@@ -53,17 +65,35 @@ class DirectoryFinder implements PageFinderInterface
             $result[] = $link;
         }
 
+        $this->list = $result;
+
         return $result;
     }
 
-    public function doesExist(string $name)
+    public function doesExist(string $name): bool
     {
-        // TODO: Implement doesExist() method.
+        $this->getList();
+
+        foreach ($this->getList() as $item) {
+            if ($item->getLink() === $name) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function load(string $name)
+    public function load(string $name) : ?Page
     {
-        // TODO: Implement load() method.
+        $this->getList();
+
+        foreach ($this->getList() as $item) {
+            if ($item->getLink() === $name) {
+                return $item->getPage();
+            }
+        }
+
+        return null;
     }
 
     private function isHtmlFile(SplFileInfo $file)

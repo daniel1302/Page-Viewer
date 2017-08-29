@@ -9,4 +9,6 @@ interface RequestInterface
     public function getQuery(): CollectionInterface;
 
     public function getRequest(): CollectionInterface;
+
+    public function get(string $name, $default = null);
 }
