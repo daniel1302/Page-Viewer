@@ -31,6 +31,7 @@ class RouteRegistry implements RouteRegistryInterface
         $router->registerRoute(new Route('contact', IndexController::class, 'contactAction'));
         $router->registerRoute(new Route('page', PageController::class, 'indexAction'));
         $router->registerRoute(new Route('view-page', PageController::class, 'viewAction'));
+
         return $router;
     }
 }

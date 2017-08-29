@@ -16,6 +16,11 @@ class Text extends ArrayObject
         return implode(PHP_EOL, $this->getArrayCopy());
     }
 
+    public function getHtmlUtf8Copy() : string
+    {
+        return mb_convert_encoding($this->getTextCopy(), 'HTML-ENTITIES', 'UTF-8');
+    }
+
     public function getLine(int $i) : ?string
     {
         if (!isset($this->lines[$i])) {

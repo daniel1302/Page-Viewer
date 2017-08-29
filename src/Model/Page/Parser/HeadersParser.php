@@ -9,13 +9,14 @@ use DOMXPath;
 
 class HeadersParser implements ParserInterface
 {
-    const FIRST_HEADER_REGEX = '/\A(?\'title\'.*)?\n^(?:(?:\-|\=)++)\Z/Uim';
-    const SMALLER_HEADER_REGEX = '/^\040*(?\'size\'\#{2,6})\040*(?\'title\'.*?)$/iU';
+    const FIRST_HEADER_REGEX = '/\A(?\'title\'.*)?\n^(?:(?:\-|\=)++)\Z/uim';
+    const SMALLER_HEADER_REGEX = '/^\040*(?\'size\'\#{2,6})\040*(?\'title\'.*?)$/iu';
 
     public function parse(Text $text): Text
     {
-        $dom = new DOMDocument();
-        $dom->loadHTML($text->getTextCopy());
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadHTML($text->getHtmlUtf8Copy());
 
         $xPath = new DOMXPath($dom);
         $nodes = $xPath->query('//p');

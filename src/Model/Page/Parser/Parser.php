@@ -25,8 +25,7 @@ class Parser
             $string = $parser->parse($string);
         }
 
-        die($string->getTextCopy());
-
+        $page->setText($string->getTextCopy());
         return $page;
     }
 

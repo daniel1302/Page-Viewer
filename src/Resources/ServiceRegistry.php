@@ -13,6 +13,7 @@ use PageViewer\Model\Page\Parser\HeadersParser;
 use PageViewer\Model\Page\Parser\ParagraphParser;
 use PageViewer\Model\Page\Parser\Parser;
 use PageViewer\Model\Page\Parser\SmallerHeadersParser;
+use PageViewer\Model\Page\Parser\UnorderedListParser;
 use PageViewer\Model\Page\Parser\UrlParser;
 use PageViewer\Repository\LinkRepository;
 use PageViewer\Repository\PageRepository;
@@ -55,7 +56,7 @@ class ServiceRegistry implements ServiceRegistryInterface
             $parser->addParser(new UrlParser());
             $parser->addParser(new ParagraphParser());
             $parser->addParser(new HeadersParser());
-//            $parser->addLineByLineParser(new FirstHeaderParser());
+            $parser->addParser(new UnorderedListParser());
 
             return $parser;
         });
